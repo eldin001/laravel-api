@@ -6,24 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    // Visualizza tutti i progetti
+
     public function index()
     {
         $projects = Project::all();
         return view('admin.projects.index', compact('projects'));
     }
 
-    // Visualizza il form di creazione di un progetto
+
     public function create()
     {
         $types = Type::all();
         return view('admin.projects.create', compact('types'));
     }
 
-    // Salva un nuovo progetto nel database
+
     public function store(Request $request)
     {
         $request->validate([
@@ -36,26 +37,30 @@ class ProjectController extends Controller
 
         $data = $request->all();
         $data['slug'] = Project::generateSlug($data['title']);
+        if($request->hasFile('image')){
+            $path = Storage::put('project_image', $request->image);
+        }
+
 
         Project::create($data);
 
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
 
-    // Visualizza il dettaglio di un progetto
+
     public function show(Project $project)
     {
         return view('admin.projects.show', compact('project'));
     }
 
-    // Visualizza il form di modifica di un progetto
+
     public function edit(Project $project)
     {
         $types = Type::all();
         return view('admin.projects.edit', compact('project', 'types'));
     }
 
-    // Aggiorna un progetto esistente nel database
+
     public function update(Request $request, Project $project)
     {
         $request->validate([
@@ -76,7 +81,7 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
     }
 
-    // Elimina un progetto dal database
+
     public function destroy(Project $project)
     {
         $project->delete();
