@@ -11,7 +11,20 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        dd($projects);
+        //dd($projects);
+        return response()->json([
+            'success' => true,
+            'results' => $projects,
+        ]);
         
+    }
+
+    public function show($slug)
+    {
+        $projects = Project::where('slug', $slug)->with('type')->first();
+        return response()->json([
+            'success' => true,
+            'results' => $projects,
+        ]);
     }
 }
