@@ -10,7 +10,7 @@
         <div class="card-body">
             @if ($project->image)
                 <div class="mb-3">
-                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" style="width: 100%; height: auto;">
+                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" style="width: 100px; height: auto;">
                 </div>
             @endif
             <h5 class="card-title">Slug: {{ $project->slug }}</h5>

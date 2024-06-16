@@ -28,7 +28,7 @@
                     <td>{{ $project->slug }}</td>
                     <td>
                         @if ($project->image)
-                        <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" style="width: 100px; height: auto;">
+                            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" style="width: 100px; height: auto;">
                         @endif
                     </td>
                     <td>{{ $project->type ? $project->type->name : 'N/A' }}</td>
@@ -45,7 +45,9 @@
                             <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Sei sicuro di voler cancellare questo progetto?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" style="border:none; background:none;"><i class="fa-solid fa-trash" style="color: #ff0000;"></i></button>
+                                <button type="submit" style="border:none; background:none;">
+                                    <i class="fa-solid fa-trash" style="color: #ff0000;"></i>
+                                </button>
                             </form>
                         </div>
                     </td>

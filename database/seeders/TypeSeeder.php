@@ -16,9 +16,9 @@ class TypeSeeder extends Seeder
             'Front Office',
             'Back Office',
         ];
-
+        
         foreach ($types as $type) {
-            Type::firstOrCreate(['name' => $type]);
+            Type::create(['name' => $type]);
         }
     }
 }

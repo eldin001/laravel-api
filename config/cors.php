@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => ['*'],
 
-    'allowed_origins_patterns' => [env('APP_FRONTEND_URL', 'http://default.it')],
+    'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
 

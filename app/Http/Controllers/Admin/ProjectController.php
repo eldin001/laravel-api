@@ -28,23 +28,23 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'slug' => 'nullable|string|max:255',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'type_id' => 'nullable|exists:types,id',
         ]);
-    
+
         $data = $request->all();
         $data['slug'] = Project::generateSlug($data['title']);
-        
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('project_images', 'public');
-            $data['image'] = $path;
 
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('projects', 'public');
+            $data['image'] = $imagePath;
         }
-    
-        Project::create($data);
-    
+
+        $project = Project::create($data);
+
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
+
     public function show(Project $project)
     {
         return view('admin.projects.show', compact('project'));
@@ -62,12 +62,11 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'slug' => 'nullable|string|max:255',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'type_id' => 'nullable|exists:types,id',
         ]);
 
         $data = $request->all();
-        
         if ($data['title'] !== $project->title) {
             $data['slug'] = Project::generateSlug($data['title']);
         }
@@ -76,10 +75,8 @@ class ProjectController extends Controller
             if ($project->image) {
                 Storage::disk('public')->delete($project->image);
             }
-            $path = $request->file('image')->store('project_images', 'public');
-            $data['image'] = $path;
-            // Debugging path
-            // dd($data['image']);
+            $imagePath = $request->file('image')->store('projects', 'public');
+            $data['image'] = $imagePath;
         }
 
         $project->update($data);

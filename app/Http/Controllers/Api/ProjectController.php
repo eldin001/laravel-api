@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class ProjectController extends Controller
 {
@@ -16,12 +16,11 @@ class ProjectController extends Controller
             'success' => true,
             'results' => $projects,
         ]);
-        
     }
 
-    public function show($slug)
+    public function show ($id)
     {
-        $projects = Project::where('slug', $slug)->with('type')->first();
+        $projects = Project::where('id', $id)->first();
         return response()->json([
             'success' => true,
             'results' => $projects,
