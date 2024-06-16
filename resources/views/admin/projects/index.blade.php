@@ -28,8 +28,7 @@
                     <td>{{ $project->slug }}</td>
                     <td>
                         @if ($project->image)
-                        <img src="{{ asset('storage/project_images/' . $project->image) }}" alt="{{ $project->title }}" style="width: 100px; height: auto;">
-
+                        <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}" style="width: 100px; height: auto;">
                         @endif
                     </td>
                     <td>{{ $project->type ? $project->type->name : 'N/A' }}</td>
